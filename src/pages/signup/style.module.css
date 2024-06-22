@@ -24,29 +24,8 @@ body{
     height: 100vh;
     padding: 2rem;
 }
-.page1
-{
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-direction: column;
-    padding-top: 11rem;
 
-}
-.page1 h1{
-    font-size: 5rem;
-    border-bottom: 3px solid var(--colorScheme);
-    font-weight: 900;
 
-}
-.page1 p{
-    width: 50%;
-    font-size: 1.75rem;
-    margin: 0.5rem 0;
-    font-weight: 500;
-}
 .loginform form{
     width: 100%;
     display: flex;
@@ -63,25 +42,20 @@ body{
     flex-direction: column;
 }
 
-.page1 {
-    /* border: 1px solid green; */
-}
 
-.page2 {
-    /* border: 1px solid blue; */
-}
 
 .page2 .loginform
 {
-    /* width: 30% ; */
-    width: 450px;
+    /* width: 450px; */
+    
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     border: 1px solid var(--borderColr);
     border-radius: 8px;
-    padding: 2rem 0;
+    padding: 2rem 3rem;
 }
 .page2 .loginform h2{
     margin: 1rem 0 0.5 0;
@@ -89,10 +63,9 @@ body{
     font-weight: 700;
 
 }
-
 .page2 .loginform .inputfield
 {
-    width: 70%;
+    width: 90%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -107,7 +80,7 @@ body{
 }
 .page2 .difauth
 {
-    width: 50%;
+    width: 70%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -205,7 +178,7 @@ body{
 .page2 .loginform .submitbtn,
 .page2 .loginform .LoadingButton
 {
-    width: 70%;
+    width: 90%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -231,7 +204,6 @@ body{
     gap: 0.5rem;
     font-size: 1rem;
     font-weight: 500;
-    
 }
 .page2 .loginform .LoadingButton button
 {
@@ -280,10 +252,9 @@ body{
     font-weight: 600;
     text-decoration: underline;
 }
-/* @media screen and (max-width: px) */
 
 
-@media screen and (max-width: 1000px)
+@media screen and (max-width: 868px)
 {
     .containerlogin
     {
@@ -293,17 +264,10 @@ body{
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            gap: 3rem;
+            /* gap: 3rem; */
     }
     .page1{
-        width: 100%;
-    height: auto;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-direction: column;
-    padding-top: 0rem;
-    /* border: 1px solid red; */
+display: none;
     }
     .page1 h1{
         font-size: 3rem;
@@ -314,8 +278,7 @@ body{
         display: none;
     }.page2
     {
-        /* border: 1px solid red; */
-        /* padding: 0; */
+        width: 100%;
         height: auto;
     }
     .page2 .loginform
@@ -334,7 +297,7 @@ body{
     }
     .page2 .loginform .inputfield
     {
-        width: 80%;
+        width: 90%;
     }
     .page2 .loginform .inputfield p{
         font-size: 0.9rem;
@@ -342,18 +305,18 @@ body{
     }
     .page2 .loginform .submitbtn
     {
-        width: 80%;
+        width: 90%;
     }
     .page2 .loginform .LoadingButton
     {
-        width: 80%;
+        width: 90%;
     
     }
 
 
     .page2 .difauth
     {
-        width: 70%;
+        width: 90%;
     }
     .haveanAcount p
     {

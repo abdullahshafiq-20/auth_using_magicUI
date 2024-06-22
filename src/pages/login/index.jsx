@@ -5,32 +5,43 @@ import { Form, Link as RouterLink } from "react-router-dom";
 
 import { useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader/Loader";
+// import { Dashboard } from "../dashboard";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [FormError, setFormError] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [Authenticated, setAuthenticated] = useState(false);
 
   const navigate = useNavigate();
 
-  const FormValidate = (formObject) => {
-    const errors = {};
-    if (!formObject.email) {
-      errors.email = "Email is required!";
+  const sendloginreq=(formresponse)=>{
+    const apiurl = "https://authapi-production-4e0d.up.railway.app/signin";
+    try {
+      setLoading(true);
+      fetch(apiurl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formresponse),
+      }).then((response) => {
+        console.log(response);
+        if (response.ok) {
+          setLoading(false);
+          setAuthenticated(true);
+          console.log("Login Success");
+          navigate("/dashboard", { state: {email , Authenticated: true}  });
+        } else {
+          setLoading(false);
+          console.log("Login Failed");
+        }
+      });
+    } catch (error) {
+      setLoading(false);
+      console.log("Login Failed");
     }
-    if (!formObject.password) {
-      errors.password = "Password is required!";
-    }
-    return errors;
-  };
-
-  useEffect(() => {
-    if (Object.keys(FormError).length === 0 && isSubmitting) {
-      console.log("Form Submitted Successfully");
-    }
-  }, [FormError]);
+  }
 
   const loginHandler = (event) => {
     event.preventDefault();
@@ -40,24 +51,14 @@ export const Login = () => {
       email: email,
       password: password,
     }
-
-
-
-
-
+    sendloginreq(formresponse);
     console.log('Form Submitted', formresponse);  
     
   };
   return (
     <>
       <div className={styles.containerlogin}>
-        {/* <div className={styles.page1}>
-          <h1>Attendify.</h1>
-          <p>
-            Count your students In, <br />
-            Not out.
-          </p>
-        </div> */}
+  
         <div className={styles.page2}>
           <div className={styles.loginform}>
             <h2>Login to your account</h2>
@@ -77,7 +78,7 @@ export const Login = () => {
                   onChange={(e) => setEmail(e.target.value)}
 
                 />
-                <p className={styles.ErrorMessage}>{FormError.email}</p>
+                {/* <p className={styles.ErrorMessage}>{FormError.email}</p> */}
               </div>
               <div className={styles.inputfield}>
                 <p>Password</p>
@@ -87,11 +88,9 @@ export const Login = () => {
                   onChange={(e) => setPassword(e.target.value)}
                   
                 />
-                <p className={styles.ErrorMessage}>{FormError.password}</p>
+                {/* <p className={styles.ErrorMessage}>{FormError.password}</p> */}
               </div>
-              {/* <div className={styles.LoadingButton}>
-                <button>hello</button>
-              </div> */}
+      
               <div className={loading ? styles.LoadingButton : styles.submitbtn}>
                 <button>Login{loading ? <Loader/>: ''}</button>
               </div>

@@ -11,6 +11,7 @@ export const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [Authenticated, setAuthenticated] = useState(false);
 
   const navigate = useNavigate();
 
@@ -48,8 +49,9 @@ export const Signup = () => {
       console.log(data);
       if (response.ok) {
         setLoading(false);
+        setAuthenticated(true);
         console.log("Signup Successfull");
-        navigate("/otpverification" ,{ state: { email: email } });
+        navigate("/otpverification" ,{ state: {email, Authenticated:true } });
       } else {
         setLoading(false);
         console.log("Signup Failed");
@@ -62,13 +64,7 @@ export const Signup = () => {
   return (
     <>
       <div className={styles.containerlogin}>
-        {/* <div className={styles.page1}>
-          <h1>Attendify.</h1>
-          <p>
-            Count your students In, <br />
-            Not out.
-          </p>
-        </div> */}
+      
         <div className={styles.page2}>
           <div className={styles.loginform}>
             <h2>Welcome! test auth API</h2>

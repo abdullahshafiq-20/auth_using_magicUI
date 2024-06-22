@@ -1,11 +1,16 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import styles from "./styles.module.css";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import  Loader  from "../../components/Loader/Loader";
 
 export const Otp = () => {
   const location = useLocation();
   const [otp, setOtp] = useState("");
+  const [loading, setLoading] = useState(false);
   const { email } = location.state || {};
+
+  const Navigate = useNavigate();
 
   const otpHandler = (event) => {
     event.preventDefault();
@@ -20,6 +25,7 @@ export const Otp = () => {
     const apiurl = "https://authapi-production-4e0d.up.railway.app/verifyOTP";
 
     try {
+      setLoading(true);
       fetch(apiurl, {
         method: "POST",
         headers: {
@@ -29,13 +35,17 @@ export const Otp = () => {
       }).then((response) => {
         console.log(response);
         if (response.ok) {
+          setLoading(false);
           console.log("Otp Verified");
+          Navigate("/dashboard", { state: { email: email } });
         } else {
+          setLoading(false);
           console.log("Otp Verification Failed");
         }
       });
       
     } catch (error) {
+      setLoading(false);
       console.log("Otp Verification Failed");
       
     }
@@ -46,18 +56,38 @@ export const Otp = () => {
 
   return (
     <>
-      <div>otp</div>
-      <form action="" onSubmit={otpHandler}>
-        <input
-          type="text"
-          value={otp}
-          onChange={(e) => setOtp(e.target.value)}
-          placeholder="Enter otp sent to your mail"
-        />
-        <button>Submit</button>
-      </form>
+      <div className={styles.containerlogin}>
+        <div className={styles.page2}>
+          <div className={styles.loginform}>
+            <h2>OTP Verification</h2>
+            <p>Enter OTP sent to your email <br />{email}</p>
+            <form onSubmit={otpHandler}>
+              <div className={styles.inputfield}>
+                <p>Enter your OTP</p>
+                <input
+                  type="text"
+                  placeholder="XXXXXX"
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value)}
 
-      <h1>{email}</h1>
+                />
+              </div>
+        
+              <div className={loading ? styles.LoadingButton : styles.submitbtn}>
+                <button>Verify{loading ? <Loader/>: ''}</button>
+              </div>
+            </form>
+
+            {/* <div className={styles.haveanAcount}>
+              <p>
+                Don't have an account? <RouterLink to="/signup">Signup</RouterLink>
+              </p>
+            </div> */}
+          </div>
+        </div>
+      </div>
+   
+
     </>
   );
 };
