@@ -2,13 +2,14 @@ import React from "react";
 import styles from "./styles.module.css";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import  Loader  from "../../components/Loader/Loader";
+import Loader from "../../components/Loader/Loader";
 
 export const Otp = () => {
   const location = useLocation();
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
   const { email } = location.state || {};
+  const [Authenticated, setAuthenticated] = useState(false);
 
   const Navigate = useNavigate();
 
@@ -36,22 +37,18 @@ export const Otp = () => {
         console.log(response);
         if (response.ok) {
           setLoading(false);
+          setAuthenticated(true);
           console.log("Otp Verified");
-          Navigate("/dashboard", { state: { email: email } });
+          Navigate("/dashboard", { state: { email, Authenticated: true } });
         } else {
           setLoading(false);
           console.log("Otp Verification Failed");
         }
       });
-      
     } catch (error) {
       setLoading(false);
       console.log("Otp Verification Failed");
-      
     }
-
-
-
   };
 
   return (
@@ -60,7 +57,10 @@ export const Otp = () => {
         <div className={styles.page2}>
           <div className={styles.loginform}>
             <h2>OTP Verification</h2>
-            <p>Enter OTP sent to your email <br />{email}</p>
+            <p>
+              Enter OTP sent to your email <br />
+              {email}
+            </p>
             <form onSubmit={otpHandler}>
               <div className={styles.inputfield}>
                 <p>Enter your OTP</p>
@@ -69,12 +69,13 @@ export const Otp = () => {
                   placeholder="XXXXXX"
                   value={otp}
                   onChange={(e) => setOtp(e.target.value)}
-
                 />
               </div>
-        
-              <div className={loading ? styles.LoadingButton : styles.submitbtn}>
-                <button>Verify{loading ? <Loader/>: ''}</button>
+
+              <div
+                className={loading ? styles.LoadingButton : styles.submitbtn}
+              >
+                <button>Verify{loading ? <Loader /> : ""}</button>
               </div>
             </form>
 
@@ -86,8 +87,6 @@ export const Otp = () => {
           </div>
         </div>
       </div>
-   
-
     </>
   );
 };
