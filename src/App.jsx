@@ -9,6 +9,7 @@ import { Dashboard } from "./pages/dashboard";
 import { Private } from "./routes/Private";
 // import { PrivateOtp } from "./routes/PrivateOtp";
 import { ProtectedOtp } from "./routes/ProtectedOtp";
+import { ProfileCard } from "./components/profilecard/ProfileCard";
 
 function App() {
   return (
@@ -17,10 +18,12 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route element={<Private />}>
-            {/* <Route path="/otpverification" element={<Otp />} /> */}
+          <Route path="/profile" element={<ProfileCard />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+
+          {/* <Route element={<Private />}>
             <Route path="/dashboard" element={<Dashboard />} />
-          </Route>
+          </Route> */}
           <Route element={<ProtectedOtp />}>
             <Route path="/otpverification" element={<Otp />} />
             {/* <Route path="/dashboard" element={<Dashboard />} /> */}

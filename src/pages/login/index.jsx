@@ -15,34 +15,36 @@ export const Login = () => {
 
   const navigate = useNavigate();
 
-  const sendloginreq=(formresponse)=>{
+  const sendloginreq = async (formresponse) => {
     const apiurl = "https://authapi-production-4e0d.up.railway.app/signin";
     try {
       setLoading(true);
-      fetch(apiurl, {
+      const response = await fetch(apiurl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formresponse),
-      }).then((response) => {
-        console.log(response);
-        if (response.ok) {
-          setLoading(false);
-          setAuthenticated(true);
-          console.log("Login Success");
-          navigate("/dashboard", { state: {email , Authenticated: true}  });
-        } else {
-          setLoading(false);
-          console.log("Login Failed");
-        }
       });
+  
+      if (response.ok) {
+        setLoading(false);
+        setAuthenticated(true);
+        const data = await response.json();
+        console.log(data);
+        // Assuming navigate is a function to redirect user after successful login
+        localStorage.setItem("id", data.user_info._id);
+        navigate("/dashboard", { state: { email, Authenticated: true } });
+      } else {
+        setLoading(false);
+        console.log("Login Failed");
+      }
     } catch (error) {
       setLoading(false);
-      console.log("Login Failed");
+      console.error("Login Failed", error);
     }
-  }
-
+  };
+  
   const loginHandler = (event) => {
     event.preventDefault();
 
